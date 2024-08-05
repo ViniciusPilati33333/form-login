@@ -2,9 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { LoginPage } from './components/LoginPage'
 import './index.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <LoginPage />
+    <QueryClientProvider client={queryClient}>
+      <LoginPage />
+    </QueryClientProvider>
   </React.StrictMode>,
 )

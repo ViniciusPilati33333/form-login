@@ -32,6 +32,8 @@ import {
 } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 
 const User = z.object ({
   email: z.string().email({message: "Email Inválido"}),
@@ -40,11 +42,24 @@ const User = z.object ({
 
 
 export function LoginPage() {
+  const navigate = useNavigate({ from: "/" });
+
+
+  const { mutate: login } = useMutation({
+    mutationFn: ({ email, password }: z.infer<typeof User>)=> {
+         return console.log(email, password)
+  },
+  onSuccess: () => {
+    navigate({to: './Dashboard.tsx'})
+  }
+    }
+ 
+)
   return (
     <Formik 
       validationSchema={toFormikValidationSchema(User)}
       initialValues={{email: '', password: ''}}
-      //onSubmit={login}
+      onSubmit={login}
     >    
     <Card className="w-full max-w-sm">
       <CardHeader>
